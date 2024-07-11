@@ -1,0 +1,57 @@
+<!-- src/app/components/imc-calculator/imc-calculator.component.html -->
+  <div class="container mx-auto my-5 p-8 bg-gray-200 rounded-lg shadow-md border border-solid border-blue-500">
+    <h2 class="text-2xl mb-6 text-center">Calculadora de IMC</h2>
+    <form [formGroup]="imcForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label for="weight" class="block mb-2">Peso (kg):</label>
+        <input
+          id="weight"
+          type="number"
+          formControlName="weight"
+          class="w-full p-2 border border-gray-300 rounded"
+        >
+        <div *ngIf="controlHasError('weight', 'required')" class="text-red-500">
+          El peso es requerido.
+        </div>
+        <div *ngIf="controlHasError('weight', 'min')" class="text-red-500">
+          El peso debe ser mayor que 0.
+        </div>
+        <div *ngIf="controlHasError('weight', 'negative')" class="text-red-500">
+          El peso no puede ser negativo.
+        </div>
+      </div>
+      <div>
+        <label for="height" class="block mb-2">Altura (cm):</label>
+        <input
+          id="height"
+          type="number"
+          formControlName="height"
+          class="w-full p-2 border border-gray-300 rounded"
+        >
+        <div *ngIf="controlHasError('height', 'required')" class="text-red-500">
+          La altura es requerida.
+        </div>
+        <div *ngIf="controlHasError('height', 'min')" class="text-red-500">
+          La altura debe ser mayor que 0.
+        </div>
+        <div *ngIf="controlHasError('height', 'negative')" class="text-red-500">
+          La altura no puede ser negativa.
+        </div>
+      </div>
+      <div class="flex justify-center items-center ">
+          <button
+            type="submit"
+            class="bg-blue-500 text-white rounded hover:bg-blue-700 my-5 mx-2"
+            [disabled]="imcForm.invalid"
+              >
+             Calcular IMC
+          </button>
+      </div>
+    </form>
+
+    <div *ngIf="result" class="mt-6 p-4 bg-white rounded-lg shadow-md">
+      <h3 class="text-xl mb-4">Resultados</h3>
+      <p><strong>IMC:</strong> {{ result.imc }}</p>
+      <p><strong>Categoría:</strong> {{ result.category }}</p>
+    </div>
+  </div>
